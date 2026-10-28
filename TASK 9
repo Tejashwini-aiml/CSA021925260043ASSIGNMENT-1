@@ -1,0 +1,64 @@
+
+#include <stdio.h>
+
+#define MAX_READING 65535L
+#define METER_RANGE 65536L
+#define FIXED_CHARGE 5000L
+#define RATE2 225L
+#define RATE3 450L
+
+long consumption(long previous, long current)
+{
+    if (current >= previous)
+        return current - previous;
+
+    return (MAX_READING - previous) + 1 + current;
+}
+
+long compute_bill(long units)
+{
+    long bill = FIXED_CHARGE;
+
+    if (units > 100)
+        bill += (units < 200 ? units - 100 : 100) * RATE2;
+
+    if (units > 200)
+        bill += (units - 200) * RATE3;
+
+    return bill;
+}
+
+int main(void)
+{
+    long previous, current, units, bill;
+
+    printf("Enter previous reading: ");
+    if (scanf("%ld", &previous) != 1)
+    {
+        printf("Invalid input\n");
+        return 1;
+    }
+
+    printf("Enter current reading: ");
+    if (scanf("%ld", &current) != 1)
+    {
+        printf("Invalid input\n");
+        return 1;
+    }
+
+    if (previous < 0 || previous > MAX_READING ||
+        current < 0 || current > MAX_READING)
+    {
+        printf("Reading out of range\n");
+        return 1;
+    }
+
+    units = consumption(previous, current);
+    bill = compute_bill(units);
+
+    printf("Units consumed: %ld\n", units);
+    printf("Energy and fixed charges: Rs %ld.%02ld\n",
+           bill / 100, bill % 100);
+
+    return 0;
+}
