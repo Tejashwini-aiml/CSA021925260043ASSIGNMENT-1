@@ -1,0 +1,55 @@
+
+#include <stdio.h>
+
+int main(void)
+{
+    int household;
+    long previous, current;
+    long units;
+    long bill_paise;
+
+    printf("Enter household number: ");
+    if (scanf("%d", &household) != 1)
+    {
+        printf("Invalid household number\n");
+        return 1;
+    }
+
+    printf("Enter previous and current readings: ");
+    if (scanf("%ld %ld", &previous, &current) != 2)
+    {
+        printf("Invalid meter readings\n");
+        return 1;
+    }
+
+    if (previous < 0 || current < 0 ||
+        previous > 65535 || current > 65535)
+    {
+        printf("Readings must be between 0 and 65535\n");
+        return 1;
+    }
+
+    if (current < previous)
+    {
+        units = (65536L - previous) + current;
+    }
+    else
+    {
+        units = current - previous;
+    }
+
+    bill_paise = 5000L;
+
+    if (units > 100)
+        bill_paise += (units < 200 ? units - 100 : 100) * 225L;
+
+    if (units > 200)
+        bill_paise += (units - 200) * 450L;
+
+    printf("\nHousehold: %d\n", household);
+    printf("Units consumed: %ld\n", units);
+    printf("Total bill: Rs %ld.%02ld\n",
+           bill_paise / 100, bill_paise % 100);
+
+    return 0;
+}
