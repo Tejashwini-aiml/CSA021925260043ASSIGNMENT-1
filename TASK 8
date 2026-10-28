@@ -1,0 +1,16 @@
+
+#include <stdio.h>
+
+int main(void)
+{
+    int units = 150;
+    long bill = 5000L;
+
+    if (units > 100)
+        bill += (long)(units - 100) * 225;
+
+    printf("Bill = Rs %ld.%02ld\n",
+           bill / 100, bill % 100);
+
+    return 0;
+}
