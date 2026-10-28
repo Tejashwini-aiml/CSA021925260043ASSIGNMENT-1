@@ -1,0 +1,16 @@
+
+#include <stdio.h>
+
+int main(void)
+{
+    printf("Integer division: %d\n", 5 / 2);
+    printf("Floating division: %.2f\n", 5.0 / 2);
+    printf("Integer multiplication: %d\n", 2 / 3 * 100);
+
+    double amount = 162.50;
+    long paise = (long)(amount * 100 + 0.5);
+
+    printf("Amount in paise: %ld\n", paise);
+
+    return 0;
+}
