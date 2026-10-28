@@ -1,0 +1,32 @@
+
+#include <stdio.h>
+
+#define RUPEES_TO_PAISE(x) ((x) * 100)
+#define SQUARE(x) ((x) * (x))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+
+static inline int square_function(int x)
+{
+    return x * x;
+}
+
+static inline int max_function(int a, int b)
+{
+    return a > b ? a : b;
+}
+
+int main(void)
+{
+    int a = 5, b = 8;
+
+    printf("Rupees to paise: %d\n", RUPEES_TO_PAISE(10));
+    printf("Square: %d\n", SQUARE(a + 1));
+    printf("Maximum: %d\n", MAX(a, b));
+
+    printf("Function square: %d\n",
+           square_function(a + 1));
+    printf("Function maximum: %d\n",
+           max_function(a, b));
+
+    return 0;
+}
