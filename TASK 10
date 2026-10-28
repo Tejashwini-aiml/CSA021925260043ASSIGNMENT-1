@@ -1,0 +1,24 @@
+
+#include <stdio.h>
+
+int main(void)
+{
+    long long paise_per_bill = 16250;
+    double rupees_per_bill = 162.50;
+    int counts[] = {4000, 60000, 800000};
+
+    for (int i = 0; i < 3; i++)
+    {
+        int n = counts[i];
+
+        long long exact_total = paise_per_bill * n;
+        double float_total = rupees_per_bill * n;
+
+        printf("Bills: %d\n", n);
+        printf("Paise total: Rs %lld.%02lld\n",
+               exact_total / 100, exact_total % 100);
+        printf("Double total: Rs %.2f\n\n", float_total);
+    }
+
+    return 0;
+}
