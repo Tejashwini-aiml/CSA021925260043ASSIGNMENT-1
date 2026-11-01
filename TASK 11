@@ -1,0 +1,53 @@
+
+#include <stdio.h>
+
+#define FIXED_CHARGE_PAISE 5000LL
+#define RATE2_PAISE 225LL
+#define RATE3_PAISE 450LL
+
+long long compute_bill(long long units)
+{
+    long long bill = FIXED_CHARGE_PAISE;
+
+    if (units > 100)
+        bill += (units < 200 ? units - 100 : 100)
+                * RATE2_PAISE;
+
+    if (units > 200)
+        bill += (units - 200) * RATE3_PAISE;
+
+    return bill;
+}
+
+int main(void)
+{
+    long long total = 0;
+    int households;
+
+    printf("Enter number of households: ");
+    if (scanf("%d", &households) != 1 ||
+        households < 1)
+    {
+        printf("Invalid number\n");
+        return 1;
+    }
+
+    for (int i = 1; i <= households; i++)
+    {
+        long long units;
+
+        printf("Enter units for household %d: ", i);
+        if (scanf("%lld", &units) != 1 || units < 0)
+        {
+            printf("Invalid units\n");
+            return 1;
+        }
+
+        total += compute_bill(units);
+    }
+
+    printf("Total collection: Rs %lld.%02lld\n",
+           total / 100, total % 100);
+
+    return 0;
+}
