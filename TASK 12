@@ -1,0 +1,56 @@
+
+#include <stdio.h>
+
+#define MINUTES_PER_DAY 1440LL
+#define READINGS_PER_DAY 96LL
+#define READINGS_PER_YEAR 35040LL
+
+int main(void)
+{
+    long long energy_wh;
+    long long normal_rate_paise;
+    int peak_hour;
+    long long charge_paise;
+
+    printf("Enter energy used in watt-hours: ");
+    if (scanf("%lld", &energy_wh) != 1 || energy_wh < 0)
+    {
+        printf("Invalid energy\n");
+        return 1;
+    }
+
+    printf("Enter normal tariff in paise per kWh: ");
+    if (scanf("%lld", &normal_rate_paise) != 1 ||
+        normal_rate_paise < 0)
+    {
+        printf("Invalid tariff\n");
+        return 1;
+    }
+
+    printf("Peak hour? Enter 1 for 6 PM to 10 PM, otherwise 0: ");
+    if (scanf("%d", &peak_hour) != 1 ||
+        (peak_hour != 0 && peak_hour != 1))
+    {
+        printf("Invalid peak-hour selection\n");
+        return 1;
+    }
+
+    /*
+       Calculate in paise.
+       1 kWh = 1000 Wh.
+       Multiply by 120 for peak hours,
+       then divide by 100 to apply the 20% increase.
+    */
+    if (peak_hour)
+        charge_paise = (energy_wh * normal_rate_paise * 120)
+                       / 100000;
+    else
+        charge_paise = (energy_wh * normal_rate_paise)
+                       / 1000;
+
+    printf("Energy: %lld Wh\n", energy_wh);
+    printf("Charge: Rs %lld.%02lld\n",
+           charge_paise / 100, charge_paise % 100);
+
+    return 0;
+}
